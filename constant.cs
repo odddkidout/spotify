@@ -24,7 +24,7 @@ namespace SPOTIFYFINAL
         static public string currentPath =
             Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-        static public int PPA_MIN = 4;
+        static public int PPA_MIN = 5;
         static public int PPA_MAX = 6;
         static public int Thread = 1;
         static public bool AGE = false;
