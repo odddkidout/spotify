@@ -10,6 +10,7 @@
       <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
       <PackageReference Include="Iterable" Version="0.2.0" />
       <PackageReference Include="itertools" Version="0.1.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
       <PackageReference Include="RandomNameGeneratorLibrary" Version="1.2.2" />
       <PackageReference Include="Selenium.WebDriver" Version="4.0.0-beta4" />
       <PackageReference Include="SmartThreadPool.dll" Version="2.3.0" />

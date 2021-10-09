@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "n32dviZYMpwBijvk84XxUONCL++1jHzqPrBXGWYdHM1vFjKwDSi7GC9Hx+p+oD6G3PmPviBgeoGIWNQER/c8PQ==",
+  "dgSpecHash": "ne6cRNsHxxH3UKgCcJ55OxHU4a+VLOPtYYQHjkVHG9mcQ7L4UiLRIMvGj/dr2T6q1of25BiYU80D5HlRGbBHJg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Administrator\\Desktop\\SPOTIFYFINAL (1)\\SPOTIFYFINAL.csproj",
   "expectedPackageFiles": [
@@ -13,7 +13,7 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netcore.targets\\1.0.1\\microsoft.netcore.targets.1.0.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.win32.primitives\\4.0.1\\microsoft.win32.primitives.4.0.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\netstandard.library\\1.6.0\\netstandard.library.1.6.0.nupkg.sha512",
-    "C:\\Users\\Administrator\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\randomnamegeneratorlibrary\\1.2.2\\randomnamegeneratorlibrary.1.2.2.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\runtime.native.system\\4.0.0\\runtime.native.system.4.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\runtime.native.system.io.compression\\4.1.0\\runtime.native.system.io.compression.4.1.0.nupkg.sha512",
