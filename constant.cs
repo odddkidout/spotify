@@ -36,7 +36,7 @@ namespace SPOTIFYFINAL
         static public bool GEN_R = false;
         static public bool GEN_WHICH = false;
         static public string GEN_DOMAIN;
-        static public string UserData = "acc.txt";
+        static public string UserData = "accs.txt";
         static public bool proxy_infox = false;
         static public string proxy_info;
         static public string proxy_info_p = "http";
@@ -199,5 +199,7 @@ namespace SPOTIFYFINAL
 
         }
 
-    }
+}
+
+    
     

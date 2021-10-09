@@ -142,12 +142,13 @@ namespace SPOTIFYFINAL
                 options.AddArgument("--remote-debugging-address=0.0.0.0");
                 options.AddUserProfilePreference("enforce-webrtc-ip-permission-check", true);
                 // options.SetLoggingPreference("goog:loggingPrefs", LogLevel.All);
-                options.BinaryLocation = Path.Combine(constant.currentPath, "Spotify\\spotify.exe");
+                options.BinaryLocation = Path.Combine(constant.currentPath, "Spotify\\Spotify.exe");
                 
                 ChromeDriverService service= ChromeDriverService.CreateDefaultService(constant.currentPath);
                 port_.MoveNext();
                 service.Port = port_.Current;
                 driver = new ChromeDriver(service, options);
+                Console.Write(driver);
                 Clear_head();
                 IDevTools devTools = driver as IDevTools;
                 session = devTools.GetDevToolsSession();
@@ -170,8 +171,9 @@ namespace SPOTIFYFINAL
             }
             try
             {
-                IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
-                string title = (string)js.ExecuteScript("Object.defineProperty(navigator, 'webdriver', {get: () => false})");
+                /*IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+                Console.Write("js :",js,"\n");
+                string title = (string)js.ExecuteScript("Object.defineProperty(navigator, 'webdriver', {get: () => false})");*/
             }
             catch (WebDriverException ex)
             {

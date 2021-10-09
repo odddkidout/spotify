@@ -81,7 +81,7 @@ namespace SPOTIFYFINAL
                         bind = user_data.Current.Split(":")[2]+":"+user_data.Current.Split(":")[3];
                     }
                 }
-                var m = new Main(Thread_id, email+":"+password, FORWARD_EMAIL, bind);
+                var m = new Main(Thread_id, email+":"+password, "false","false");
 
                 // account gen
                 if (constant.GEN_R)

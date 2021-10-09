@@ -16,7 +16,7 @@ using System.Linq;
 using System.Net.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-
+using Newtonsoft.Json;
 namespace SPOTIFYFINAL
 {
     class Program
@@ -34,9 +34,76 @@ namespace SPOTIFYFINAL
         static void Main()
         {
             ASCII.ASCIII();
-            
-            makeConfig();
-
+            System.Console.Write("\n");
+            System.Console.WriteLine("1 => Load config/start bot");
+            System.Console.WriteLine("2 => Make config");
+            System.Console.Write("3 => setup discord webhook\n\n");
+            int temp = 0;
+            try
+            {
+                temp = Convert.ToInt32(System.Console.ReadLine());
+            }
+            catch (System.FormatException)
+            {
+                Console.WriteLine("\nOnly numbers allowed!!!! bitch. ");
+                Thread.Sleep(2000);
+                Main();
+            }
+            catch (Exception ex)
+            {
+                errorlogger(ex, true);
+                Console.Clear();
+                Main();
+            };
+            if (temp == 1)
+            {
+                try
+                {
+                    loadConfig();
+                }
+                catch (Exception ex)
+                {
+                    errorlogger(ex, true);
+                    Console.Clear();
+                    Main();
+                }
+            }
+            else if (temp == 2)
+            {
+                try
+                {
+                    makeConfig();
+                    System.Console.WriteLine("Config Created");
+                    Thread.Sleep(2000);
+                    Main();
+                }
+                catch (Exception ex)
+                {
+                    errorlogger(ex, true);
+                    Main();
+                }
+            }
+            else if (temp == 3)
+            {
+                try
+                {
+                    System.Console.WriteLine("still in progress");
+                    Thread.Sleep(3000);
+                    Main();
+                }
+                catch (Exception ex)
+                {
+                    errorlogger(ex, true);
+                    Console.Clear();
+                    Main();
+                }
+            }
+            else
+            {
+                System.Console.WriteLine("invalid selection");
+                Main();
+            }
+            Console.Write("starting threads");
             new Thread(initialiseThreads).Start();
             while (true)
             {
@@ -102,6 +169,7 @@ namespace SPOTIFYFINAL
             {
                 try
                 {
+                        Console.Write("task queued");
                     _smartThreadPool.QueueWorkItem(() => new main_THREADLOOPER(i));
                     Thread.Sleep(5000);
                 }
@@ -109,6 +177,7 @@ namespace SPOTIFYFINAL
                 {
                     log.errorlogger(ex, true);
                 }
+                
             }
             
         }
@@ -491,10 +560,89 @@ namespace SPOTIFYFINAL
                 }
             }
             
-            configuration.readconfig();
+            File.WriteAllText(Path.Combine(currentPath, "config", configuration.name + ".txt"), JsonConvert.SerializeObject(configuration, Formatting.Indented));
+            
             
         }
+        public static void loadConfig()
+        {
+            logo();
+            int selection = -1;
+            string configPath = Path.Combine(currentPath, "config");
+            if (!Directory.Exists(configPath))
+            {
+                Directory.CreateDirectory(configPath);
+            }
+            string[] configs = Directory.GetFiles(configPath, "*.txt");
+            System.Console.Write("Choose Config Number \n");
+            for (int i = 0; i < configs.Length; i++)
+            {
+                System.Console.WriteLine($"{i + 1}. {Path.GetFileNameWithoutExtension(configs[i])}");
+            }
+            Console.WriteLine("\n\nEnter 0 to go back\n input :- ");
+            bool verify = true;
+            while (verify)
+            {
+                try
+                {
+                    selection = Convert.ToInt32(System.Console.ReadLine());
+                    verify = false;
+                }
+                catch (System.FormatException)
+                {
+                    Console.WriteLine("\nOnly numbers allowed!!!! bitch. ");
+                    Thread.Sleep(2000);
+                }
+            }
+            if (selection > 0 & selection <= configs.Length)
+            {
+                var fileStream = File.ReadAllText(configs[selection - 1]);
+                Console.Write(fileStream);
+                Configuration config = 
+                    JsonConvert.DeserializeObject<Configuration>(fileStream);
+                constant.Thread = config.maxThreads;
+                constant.PPA_MAX = config.PPA_MAX;
+                constant.PPA_MIN = config.PPA_MIN;
+                constant.MIN_ = config.minPlaytime;
+                constant.MAX_ = config.maxPlaytime;
+                constant.GEN_R = config.GEN_R;
+                constant.song_url_list_file = config.song_url_list_file;
+                if (constant.GEN_R)
+                {
+                    constant.VERIFY_GO = config.VERIFY_GO;
+                    constant.GEN_WHICH = config.GEN_WHICH;
+                    if (constant.GEN_WHICH)
+                    {constant.GEN_DOMAIN = config.GEN_DOMAIN;}
+                    constant.proxy_infox = config.proxy_infox;
+                    if (config.proxy_infox)
+                    {
+                        constant.proxy_info = config.proxy_info;
+                        constant.proxy_info_p = config.proxy_info_p;
+                    }
+                }
+                constant.stream_proxyx = config.stream_proxyx;
+                if (config.stream_proxyx)
+                {
+                    constant.stream_proxy = config.stream_proxy;
+                    constant.stream_proxy_p = config.stream_proxy_p;
+                }
+            }
+            else if (selection == 0)
+            {
+                Main();
+            }
+            else
+            {
+
+                logo();
+                Console.WriteLine("Invalid Choice!! nigga");
+                Thread.Sleep(1500);
+                loadConfig();
+
+            }
+        }
         
+               
 
     }
 }
