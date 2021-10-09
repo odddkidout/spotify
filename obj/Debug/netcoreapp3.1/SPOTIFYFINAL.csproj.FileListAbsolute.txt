@@ -1,0 +1,45 @@
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.exe
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.deps.json
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.runtimeconfig.json
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.runtimeconfig.dev.json
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.dll
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.pdb
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.csprojAssemblyReference.cache
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.AssemblyInfoInputs.cache
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.AssemblyInfo.cs
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.csproj.CoreCompileInputs.cache
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.dll
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.pdb
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.genruntimeconfig.cache
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\Colorful.Console.dll
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\WebDriver.dll
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\SmartThreadPool.dll
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.csproj.CopyComplete
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\RandomNameGeneratorLibrary.dll
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\itertools.dll
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\Iterable.dll
+C:\Users\A.T\RiderProjects\SPOTIFYFINAL\SPOTIFYFINAL\bin\Debug\netcoreapp3.1\SeleniumExtras.WaitHelpers.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.pdb
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.exe
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.deps.json
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.runtimeconfig.json
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.runtimeconfig.dev.json
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\SPOTIFYFINAL.pdb
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\Colorful.Console.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\SeleniumExtras.WaitHelpers.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\Iterable.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\itertools.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\RandomNameGeneratorLibrary.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\WebDriver.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\bin\Debug\netcoreapp3.1\SmartThreadPool.dll
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.csproj.CopyComplete
+C:\Users\Administrator\Desktop\SPOTIFYFINAL (1)\obj\Debug\netcoreapp3.1\SPOTIFYFINAL.genruntimeconfig.cache
