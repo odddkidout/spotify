@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Spotify_Desktop</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Colorful.Console" Version="1.2.15" />
+      <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
+      <PackageReference Include="Mail.dll" Version="3.0.21267.1221" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+      <PackageReference Include="RandomNameGeneratorLibrary" Version="1.2.2" />
+      <PackageReference Include="Selenium.WebDriver" Version="4.0.0-beta4" />
+      <PackageReference Include="SmartThreadPool.dll" Version="2.3.0" />
+    </ItemGroup>
+
+</Project>
