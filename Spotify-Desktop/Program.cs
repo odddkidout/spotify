@@ -4,6 +4,7 @@ using Console = Colorful.Console;
 using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using Amib.Threading;
 using KeyAuth;
@@ -19,100 +20,22 @@ namespace SPOTIFYFINAL
         static void Main()
         {
             string VERSION = "0.1.0";
-            try
-            {
-                var n = new Programx();
-                if (!n.Mainx())
-                {
-                    Console.WriteLine("\n\n  FAIL LOGIN"); // thought people would be able to find this easier than a ReadLine...
-                    Thread.Sleep(3200); // I lied! Jk, it takes the average person 1.8 seconds to read the above output, so I've accounted for that. it would be a huge travesty if it didn't close in five seconds from the ouptput being displayed :)
-                    Environment.Exit(0);
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("\n\n  Closing in five seconds..."); // thought people would be able to find this easier than a ReadLine...
-                Thread.Sleep(3200); // I lied! Jk, it takes the average person 1.8 seconds to read the above output, so I've accounted for that. it would be a huge travesty if it didn't close in five seconds from the ouptput being displayed :)
-                Environment.Exit(0);
-            }
-            while (true)
-            {
-                Console.Clear();
-                System.Console.Write("\n");
-                ASCII.ASCIII();
-                System.Console.Write("\n");
-                System.Console.WriteLine("1 => Load config/start bot");
-                System.Console.WriteLine("2 => Make config");
-                System.Console.Write("3 => setup discord webhook\n");
-                int temp = 0;
-                try
-                {
-                    temp = Convert.ToInt32(System.Console.ReadLine());
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("\nOnly numbers allowed!!!! bitch. ");
-                    Thread.Sleep(2000);
-                    continue;
-                }
-                catch (Exception ex)
-                {
-                    errorlogger(ex, true);
-                    Console.Clear();
-                    continue;
-                }
-                if (temp == 1)
-                {
-                    try
-                    {
-                        loadConfig();
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        errorlogger(ex, true);
-                        Console.Clear();
-                    }
-                }
-                else if (temp == 2)
-                {
-                    try
-                    {
-                        makeConfig();
-                        System.Console.WriteLine("Config Created");
-                        Thread.Sleep(2000);
-                    }
-                    catch (Exception ex)
-                    {
-                        errorlogger(ex, true);
-                    }
-                }
-                else if (temp == 3)
-                {
-                    try
-                    {
-                        System.Console.WriteLine("still in progress");
-                        Thread.Sleep(3000);
-                    }
-                    catch (Exception ex)
-                    {
-                        errorlogger(ex, true);
-                        Console.Clear();
-                    }
-                }
-                else
-                {
-                    System.Console.WriteLine("invalid selection");
-                }
-            }
+            PerformanceCounter cpuCounter;
+            PerformanceCounter ramCounter;
 
+            cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+
+            Auth();
+            Config();
+            
             new Thread(initialiseThreads).Start();
             
             while (true)
             {
                 // Console.Clear();
                 // ASCII.ASCIII();
-                Console.Title = $"SPoTi_{VERSION}_|_TOTAL-STREAM-{stats.Stream_Total}_|_LOGIN_{stats.Succes_login}_|_GENRATED-{stats.Gen}_|_FAIL-{stats.fail}_|";
+                Console.Title = $"SPoTi_{VERSION}_|_TOTAL-STREAM-{stats.Stream_Total}_|_LOGIN_{stats.Succes_login}_|_GENRATED-{stats.Gen}_|_FAIL-{stats.fail}_|_CPU-{cpuCounter.NextValue()+"%"}_|_RAM-{ramCounter.NextValue()+"MB"}";
                 // Console.WriteLine("Note \"{0}\"", Console.Title);
                 Thread.Sleep(5000);
             }
@@ -134,7 +57,6 @@ namespace SPOTIFYFINAL
             stpStartInfo.MinWorkerThreads = Convert.ToInt32(1);
             _smartThreadPool = new SmartThreadPool(stpStartInfo);
         }
-        
         static void logo()
         {
             Console.Clear();
@@ -143,9 +65,7 @@ namespace SPOTIFYFINAL
         }
         
         private static string currentPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        
         private static Mutex errorMutex = new Mutex();
-
         private static void errorlogger(Exception ex, bool console)
         {
             string path = Path.Combine(currentPath, "error.txt");
@@ -189,7 +109,6 @@ namespace SPOTIFYFINAL
             }
             
         }
-        
         private static void makeConfig()
         {
             Configuration configuration = new Configuration();
@@ -724,11 +643,10 @@ namespace SPOTIFYFINAL
                 }
             }
             
-            configuration.readconfig();
             File.WriteAllText(Path.Combine(currentPath, "config", configuration.name + ".txt"), JsonConvert.SerializeObject(configuration, Formatting.Indented)); 
+            configuration.readconfig();
             
         }
-        
         private static void loadConfig()
         {
             logo();
@@ -819,7 +737,7 @@ namespace SPOTIFYFINAL
             }
             else if (selection == 0)
             {
-                Main();
+                Config();
             }
             else
             {
@@ -829,6 +747,100 @@ namespace SPOTIFYFINAL
                 Thread.Sleep(1500);
                 loadConfig();
         
+            }
+        }
+
+        private static void Auth()
+        {
+            try
+            {
+                var n = new Programx();
+                if (!n.Mainx())
+                {
+                    Console.WriteLine("\n\n  FAIL LOGIN"); // thought people would be able to find this easier than a ReadLine...
+                    Thread.Sleep(3200); // I lied! Jk, it takes the average person 1.8 seconds to read the above output, so I've accounted for that. it would be a huge travesty if it didn't close in five seconds from the ouptput being displayed :)
+                    Environment.Exit(0);
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("\n\n  Closing in five seconds..."); // thought people would be able to find this easier than a ReadLine...
+                Thread.Sleep(3200); // I lied! Jk, it takes the average person 1.8 seconds to read the above output, so I've accounted for that. it would be a huge travesty if it didn't close in five seconds from the ouptput being displayed :)
+                Environment.Exit(0);
+            }
+        }
+
+        private static void Config()
+        {
+            while (true)
+            {
+                Console.Clear();
+                System.Console.Write("\n");
+                ASCII.ASCIII();
+                System.Console.Write("\n");
+                System.Console.WriteLine("1 => Load config/start bot");
+                System.Console.WriteLine("2 => Make config");
+                System.Console.Write("3 => setup discord webhook\n");
+                int temp = 0;
+                try
+                {
+                    temp = Convert.ToInt32(System.Console.ReadLine());
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("\nOnly numbers allowed!!!! bitch. ");
+                    Thread.Sleep(2000);
+                    continue;
+                }
+                catch (Exception ex)
+                {
+                    errorlogger(ex, true);
+                    Console.Clear();
+                    continue;
+                }
+                if (temp == 1)
+                {
+                    try
+                    {
+                        loadConfig();
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        errorlogger(ex, true);
+                        Console.Clear();
+                    }
+                }
+                else if (temp == 2)
+                {
+                    try
+                    {
+                        makeConfig();
+                        System.Console.WriteLine("Config Created");
+                        Thread.Sleep(2000);
+                    }
+                    catch (Exception ex)
+                    {
+                        errorlogger(ex, true);
+                    }
+                }
+                else if (temp == 3)
+                {
+                    try
+                    {
+                        System.Console.WriteLine("still in progress");
+                        Thread.Sleep(3000);
+                    }
+                    catch (Exception ex)
+                    {
+                        errorlogger(ex, true);
+                        Console.Clear();
+                    }
+                }
+                else
+                {
+                    System.Console.WriteLine("invalid selection");
+                }
             }
         }
         

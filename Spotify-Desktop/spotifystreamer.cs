@@ -17,7 +17,6 @@ using System.Net.Mime;
 using System.Net.Security;
 using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.DevTools;
-using OpenQA.Selenium.DevTools.V91.Overlay;
 using OpenQA.Selenium.Support.UI;
 using RandomNameGeneratorLibrary;
 using Network = OpenQA.Selenium.DevTools.V91.Network;
@@ -32,7 +31,6 @@ namespace SPOTIFYFINAL
         private ChromeOptions options;
         int Thread_id = 0;
         public bool ini = true;
-        public bool session_ind = false;
         public bool session_i = false;
         private Process process_;
         private string email__;
@@ -58,7 +56,7 @@ namespace SPOTIFYFINAL
                     }
                 }
                 
-                session_ind = false;
+                session_i = false;
                 Thread_id = id;
                 options = new ChromeOptions();
                 // port generator
@@ -343,12 +341,12 @@ namespace SPOTIFYFINAL
             try
             {
                 wait4.Until(c => c.FindElement(By.ClassName("FieldError")));
+                log.Threadlogger(Thread_id, "EMAIL already exist");
                 return true;
 
             }
             catch (Exception e)
             {
-                log.Threadlogger(Thread_id, "EMAIL already exist");
                 return false;
             }
             
@@ -440,7 +438,15 @@ namespace SPOTIFYFINAL
 
         public void Refresh()
         {
-            driver.Navigate().Refresh();
+            try
+            {
+                driver.Navigate().Refresh();
+            }
+            catch (Exception)
+            {
+                log.Threadlogger(Thread_id, "REFRESH ERROR");
+            }
+            
             Thread.Sleep(3000);
         }
         
@@ -455,6 +461,7 @@ namespace SPOTIFYFINAL
             }
             catch (Exception e)
             {
+                
                 return false;
             }
         }
@@ -561,7 +568,7 @@ namespace SPOTIFYFINAL
             }
             catch (Exception e)
             {
-                log.Threadlogger(Thread_id, e.ToString());
+                log.Threadlogger(Thread_id, "? ERROR > NO APP >");
                 return false;
             }
 
