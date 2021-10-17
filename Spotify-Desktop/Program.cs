@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Amib.Threading;
 using KeyAuth;
+using Spotify_Desktop;
 
 namespace SPOTIFYFINAL
 {
@@ -794,6 +795,7 @@ namespace SPOTIFYFINAL
                 System.Console.WriteLine("1 => Load config/start bot");
                 System.Console.WriteLine("2 => Make config");
                 System.Console.Write("3 => setup discord webhook\n");
+                Console.WriteLine("4 => connect to bot net");
                 int temp = 0;
                 try
                 {
@@ -849,6 +851,25 @@ namespace SPOTIFYFINAL
                         errorlogger(ex, true);
                         Console.Clear();
                     }
+                }
+                else if (temp == 4)
+                {
+                    while (true)
+                    {
+                        try
+                        {
+                            System.Console.WriteLine("enter ip:port/domain to botmaster\n and then delay");
+                            var apitemp = new api_Django(Console.ReadLine(),Convert.ToInt32(Console.ReadLine()));
+                            Thread.Sleep(3000);
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            errorlogger(ex, true);
+                            Console.Clear();
+                        }
+                    }
+                    
                 }
                 else
                 {

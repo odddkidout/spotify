@@ -53,6 +53,7 @@ namespace SPOTIFYFINAL
         public static bool v_proxyx = false;
         public static string v_proxy;
         public static string v_proxy_p = "http";
+        public static string loadedconfigid;
     }
 
     public class stats
@@ -98,6 +99,7 @@ namespace SPOTIFYFINAL
 
     class Configuration
     {
+        public string configId { get; set; }
         public string name { get; set; }
         public int PPA_MIN { get; set; }
         public int PPA_MAX { get; set; }

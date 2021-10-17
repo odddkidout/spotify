@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="Colorful.Console" Version="1.2.15" />
+      <PackageReference Include="ComputerInfo" Version="0.1.0-prerelease" />
       <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
       <PackageReference Include="Mail.dll" Version="3.0.21267.1221" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
