@@ -17,6 +17,7 @@ using System.Net.Mime;
 using System.Net.Security;
 using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.DevTools;
+using OpenQA.Selenium.DevTools.V91.Page;
 using OpenQA.Selenium.Support.UI;
 using RandomNameGeneratorLibrary;
 using Network = OpenQA.Selenium.DevTools.V91.Network;
@@ -34,6 +35,7 @@ namespace SPOTIFYFINAL
         public bool session_i = false;
         private Process process_;
         private string email__;
+        public DevToolsSessionDomains domains;
         public
             Browser(int id, string email, string bind)
         {
@@ -160,7 +162,7 @@ namespace SPOTIFYFINAL
                 if (!Clear_head()) ini = false;
                 IDevTools devTools = driver as IDevTools;
                 session = devTools.GetDevToolsSession();
-                var domains = session.GetVersionSpecificDomains<DevToolsSessionDomains>();
+                domains = session.GetVersionSpecificDomains<DevToolsSessionDomains>();
                 domains.Network.Enable(new Network.EnableCommandSettings());
                 domains.Network.SetBlockedURLs(new Network.SetBlockedURLsCommandSettings()
                 {
@@ -171,6 +173,8 @@ namespace SPOTIFYFINAL
                         "https://xpui.app.spotify.com/vendor~xpui.css"
                     }
                 });
+                
+
             }
             catch (Exception e)
             {
@@ -190,6 +194,14 @@ namespace SPOTIFYFINAL
             
             }
             
+        }
+
+        public void Evaluate(string jscode)
+        {
+            domains.Page.AddScriptToEvaluateOnNewDocument(new AddScriptToEvaluateOnNewDocumentCommandSettings()
+            {
+                Source = jscode,
+            });
         }
 
         public bool Node_auth(string proxy)
@@ -258,14 +270,14 @@ namespace SPOTIFYFINAL
             {
                 process_.Kill();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                log.Threadlogger(Thread_id, "[IGNORE]ERROR WHILE KILLING NODE ");
+                log.Threadlogger(Thread_id, " [IGNORE] ERROR WHILE KILLING NODE ");
             }
             
         }
 
-        private bool Clear_head()
+        public bool Clear_head()
         {
             var wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(9));
             try
@@ -273,7 +285,7 @@ namespace SPOTIFYFINAL
                 wait4.Until(c => c.FindElement(By.CssSelector("head")));
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -302,7 +314,7 @@ namespace SPOTIFYFINAL
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -327,7 +339,7 @@ namespace SPOTIFYFINAL
                 driver.FindElement(By.Name("name")).SendKeys(name);
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -345,7 +357,7 @@ namespace SPOTIFYFINAL
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -363,7 +375,7 @@ namespace SPOTIFYFINAL
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -392,7 +404,7 @@ namespace SPOTIFYFINAL
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -410,7 +422,7 @@ namespace SPOTIFYFINAL
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -430,7 +442,7 @@ namespace SPOTIFYFINAL
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -459,7 +471,7 @@ namespace SPOTIFYFINAL
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 
                 return false;
@@ -480,9 +492,9 @@ namespace SPOTIFYFINAL
                     return true;
 
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    driver.Navigate().Refresh();
+                    Refresh();
                 }
 
             }
@@ -493,9 +505,9 @@ namespace SPOTIFYFINAL
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                driver.Navigate().Refresh();
+                Refresh();
             }
             return false;
         }
@@ -516,10 +528,16 @@ namespace SPOTIFYFINAL
                 break;
 
             }
-            
 
-            if (!Done_()) return false;
-            Clear_head();
+            if (GEN_LAST())
+            {
+                return false;
+            }
+
+            if (!Done_())
+            {
+                return false;
+            }
             return true;
         }
         
@@ -528,12 +546,11 @@ namespace SPOTIFYFINAL
             var wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
             try
             {
-                wait4.Until(c =>
-                    c.FindElement(By.Id("signup-button")).Displayed);
+                wait4.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id("signup-button")));
                 return false;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return true;
             }
@@ -544,19 +561,9 @@ namespace SPOTIFYFINAL
             if (Pre_Done_())
             {
                 return false;
-            }
-            var wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
-            try
-            {
-                wait4.Until(c =>
-                    c.FindElement(By.CssSelector("#signup > form > div.glue-hidden-visually > div > ul > li")).Displayed);
-                return true;
-
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
+            } 
+            
+            return true;
         }
         
         public bool Thread_c_()
@@ -566,7 +573,7 @@ namespace SPOTIFYFINAL
                 var title_ = driver.Title;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 log.Threadlogger(Thread_id, "? ERROR > NO APP >");
                 return false;
@@ -585,7 +592,7 @@ namespace SPOTIFYFINAL
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -601,19 +608,19 @@ namespace SPOTIFYFINAL
             {
                 js.ExecuteScript("window.scrollBy(0,1300);");
                 Thread.Sleep(1500);
-                var x = wait4.Until(c => c.FindElement(By.CssSelector("[aria-label='Play']")));
+                var x = wait4.Until(c => c.FindElement(By.CssSelector("[aria-label=\"Play\"]")));
                 x.Click();
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
             
         }
         
-        private bool Continue_l_()
+        private void Continue_l_()
         {
             int trie = 0;
             while (trie < 26)
@@ -626,8 +633,7 @@ namespace SPOTIFYFINAL
                 }
                 catch (Exception e)
                 {
-                    log.Threadlogger(Thread_id, e.ToString());
-                    return false;
+                    return;
                 }
 
                 try
@@ -635,13 +641,11 @@ namespace SPOTIFYFINAL
                     var element = driver.FindElement(By.Id("signup-button"));
                     element.Click();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     log.Threadlogger(Thread_id, "NO SIGNUP BUTTON");
                 }
             }
-
-            return true;
 
         }
         
@@ -768,7 +772,6 @@ namespace SPOTIFYFINAL
         }
         
         // Browser api remain
-        
         public bool like_playlist()
         {
             var wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
@@ -804,7 +807,7 @@ namespace SPOTIFYFINAL
                         return true;
                     }
                     driver.Navigate().Refresh();
-                    Thread.Sleep(5000);
+                    Thread.Sleep(10000);
                 }
             }
             return false;
@@ -829,7 +832,7 @@ namespace SPOTIFYFINAL
         
         public bool song_url_loaded_check()
         {
-            var wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(35));
+            var wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
             try
             {
                 wait4.Until(c => c.FindElement(By.XPath("//span[text()=\"Create Playlist\"]")));
@@ -846,7 +849,7 @@ namespace SPOTIFYFINAL
         
         private bool song_url_loaded_check_()
         {
-            var wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(35));
+            var wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
             try
             {
                 wait4.Until(c => c.FindElement(By.XPath("//button[text()='Upgrade']")));
@@ -1019,21 +1022,31 @@ namespace SPOTIFYFINAL
         
         private bool check_song(int number)
         {
-            
-            var wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            number++;
-            try
-            {
-                wait4.Until(c => c.FindElement(By.CssSelector($"[aria-rowindex=\"{number}\"]")));
-                Thread.Sleep(2500);
-                return true;
 
-            }
-            catch (Exception e)
+            int trie = 0;
+            int wait = 11;
+            while (trie < 3)
             {
-                return false;
+                var wait4 = new WebDriverWait(driver, TimeSpan.FromSeconds(wait));
+                IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+                number++;
+                trie++;
+                try
+                {
+                    wait4.Until(c => c.FindElement(By.CssSelector($"[aria-rowindex=\"{number}\"]")));
+                    Thread.Sleep(2500);
+                    return true;
+
+                }
+                catch (Exception)
+                {
+                    wait = 4;
+                    js.ExecuteScript("window.scrollBy(0,800);");
+                }
             }
-            
+
+            return false;
+
         }
         
         private bool click_song(int number)
@@ -1315,7 +1328,7 @@ namespace SPOTIFYFINAL
                 catch (Exception e)
                 {
                     driver.Navigate().Refresh();
-                    log.Threadlogger(Thread_id,($"{e.ToString()}ERROR WHILE CHECKING LOGIN"));
+                    log.Threadlogger(Thread_id,("ERROR WHILE CHECKING LOGIN"));
                     if (Loader_Pre_check())
                     {
                         return false;
@@ -1392,7 +1405,7 @@ namespace SPOTIFYFINAL
                 return true;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -1416,8 +1429,8 @@ namespace SPOTIFYFINAL
         {
             var x = Environment.GetEnvironmentVariable("LocalAppData");
             var x2 = Environment.GetEnvironmentVariable("APPDATA");
-            var path = x+$"/Spotify-{email__}";
-            var path2 = x2+$"/Spotify-{email__}";
+            var path = x+@$"/Spotify-{email__}";
+            var path2 = x2+@$"/Spotify-{email__}";
             try
             {
                 if (Directory.Exists(path)) Directory.Delete(path, true);

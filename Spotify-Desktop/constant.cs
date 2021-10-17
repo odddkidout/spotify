@@ -139,6 +139,16 @@ namespace SPOTIFYFINAL
             if (GEN_R)
             {
                 constant.VERIFY_GO = VERIFY_GO;
+                if (VERIFY_GO)
+                {
+                    constant.v_proxyx = v_proxyx;
+                    if (v_proxyx)
+                    {
+                        constant.v_proxy = v_proxy;
+                        constant.v_proxy_p = v_proxy_p;
+                    }
+                }
+                
                 constant.GEN_WHICH = GEN_WHICH;
                 if (GEN_WHICH) constant.GEN_DOMAIN = GEN_DOMAIN;
                 constant.proxy_infox = proxy_infox;
@@ -148,6 +158,10 @@ namespace SPOTIFYFINAL
                     constant.proxy_info_p = proxy_info_p;
                 }
             }
+            else
+            {
+                constant.UserData = UserData;
+            }
             
             constant.stream_proxyx = stream_proxyx;
             if (stream_proxyx)
@@ -155,14 +169,7 @@ namespace SPOTIFYFINAL
                 constant.stream_proxy = stream_proxy;
                 constant.stream_proxy_p = stream_proxy_p;
             }
-            
-            constant.v_proxyx = stream_proxyx;
-            if (v_proxyx)
-            {
-                constant.v_proxy = stream_proxy;
-                constant.v_proxy_p = stream_proxy_p;
-            }
-            
+
             constant.Like = Like;
             if (Like)
             {
@@ -192,7 +199,7 @@ namespace SPOTIFYFINAL
                 path = Path.Combine(path, $"THREAD_{Threadid}.txt");
                 try
                 {
-                    Console.Write($"\n {constant.startz.TimeOfDay} | THREAD_{Threadid}| "+update);
+                    Console.Write($"\n{constant.startz.Date.Day}{constant.startz.Date.Month}-{constant.startz.TimeOfDay.Hours}-{constant.startz.TimeOfDay.Minutes}| THREAD_{Threadid}| "+update);
                     using (var tw = new StreamWriter(path, true))
                     {
                         tw.WriteLine(update);

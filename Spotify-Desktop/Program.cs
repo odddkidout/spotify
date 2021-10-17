@@ -5,7 +5,9 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Amib.Threading;
 using KeyAuth;
 
@@ -19,6 +21,7 @@ namespace SPOTIFYFINAL
 
         static void Main()
         {
+            
             string VERSION = "0.1.0";
             PerformanceCounter cpuCounter;
             PerformanceCounter ramCounter;
@@ -26,7 +29,9 @@ namespace SPOTIFYFINAL
             cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             ramCounter = new PerformanceCounter("Memory", "Available MBytes");
 
-            Auth();
+            helper.log_cleaner();
+            helper.Cleaner();
+            // Auth();
             Config();
             
             new Thread(initialiseThreads).Start();
@@ -698,6 +703,16 @@ namespace SPOTIFYFINAL
                 if (configuration.GEN_R)
                 {
                     configuration.VERIFY_GO = Convert.ToBoolean(config.VERIFY_GO);
+                    if (configuration.VERIFY_GO)
+                    {
+                        configuration.v_proxyx = Convert.ToBoolean(config.v_proxyx);
+                        if (configuration.v_proxyx)
+                        {
+                            configuration.v_proxy = Convert.ToString(config.v_proxyx);
+                            configuration.v_proxy_p = Convert.ToString(config.v_proxy_p);
+                        }
+                    }
+                   
                     configuration.GEN_WHICH = Convert.ToBoolean(config.GEN_WHICH);
                     if (configuration.GEN_WHICH)
                     {configuration.GEN_DOMAIN = Convert.ToString(config.GEN_DOMAIN);}
@@ -708,19 +723,17 @@ namespace SPOTIFYFINAL
                         configuration.proxy_info_p = Convert.ToString(config.proxy_info_p);
                     }
                 }
+                else
+                {
+                    configuration.UserData = Convert.ToString(config.UserData);
+                }
                 configuration.stream_proxyx = Convert.ToBoolean(config.stream_proxyx);
                 if (configuration.stream_proxyx)
                 {
                     configuration.stream_proxy = Convert.ToString(config.stream_proxy);
                     configuration.stream_proxy_p = Convert.ToString(config.stream_proxy_p);
                 }
-                configuration.v_proxyx = Convert.ToBoolean(config.stream_proxyx);
-                if (configuration.v_proxyx)
-                {
-                    configuration.v_proxy = Convert.ToString(config.stream_proxy);
-                    configuration.v_proxy_p = Convert.ToString(config.stream_proxy_p);
-                }
-                
+
                 configuration.Like = Convert.ToBoolean(config.Like);
                 if (configuration.Like)
                 {

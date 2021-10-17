@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
+using OpenQA.Selenium.DevTools.V91.Profiler;
 using RandomNameGeneratorLibrary;
 using Console = Colorful.Console;
 
@@ -9,25 +12,34 @@ namespace SPOTIFYFINAL
 {
     public class main_THREADLOOPER
     {
-        static int Thread_id = 0;
-        
-        public main_THREADLOOPER(int Id)
+        public main_THREADLOOPER(int i)
         {
-            Thread_id = Id;
-            log.Threadlogger(Thread_id, "START" + Thread_id);
-            
+            main_(i);
+        }
+        private void main_(int Id)
+        {
+            int Thread_id = Id;
             while (true)
             {
-                if (!run())
+                var runx = false;
+                try
+                {
+                    runx = run(Thread_id);
+                }
+                catch (Exception)
+                {
+                    log.Threadlogger(Thread_id, "-----------------" + Thread_id);
+                }
+                
+                if (!runx)
                 {
                     log.Threadlogger(Thread_id, "FAIL--" + Thread_id);
                 }
                 log.Threadlogger(Thread_id, "START" + Thread_id);
-                Thread.Sleep(300);
+                Thread.Sleep(5000);
             }
-            
         }
-        public string get_email_(string GEN_DOMAIN_)
+        private string get_email_(string GEN_DOMAIN_)
         {
             if (constant.GEN_WHICH)
             {
@@ -50,8 +62,9 @@ namespace SPOTIFYFINAL
             }
         }
 
-        public bool run()
+        private bool run(int Id)
         {
+            int Thread_id = Id;
             string email;
             string password;
             string GEN_DOMAIN_ = "false";
@@ -75,13 +88,14 @@ namespace SPOTIFYFINAL
                 }
                 else
                 {
-                    var user_data = helper.UserData;
-                    user_data.MoveNext();
-                    email = user_data.Current.Split(":")[0];
-                    password = user_data.Current.Split(":")[1];
-                    if (helper.proxy_auth_checker(user_data.Current))
+                    helper.UserData.MoveNext();
+                    Console.Write("-=-=-=-=-=-=-helper.UserData.Current");
+                    Console.Write(helper.UserData.Current);
+                    email = helper.UserData.Current.Split(":")[0];
+                    password = helper.UserData.Current.Split(":")[1];
+                    if (helper.proxy_auth_checker(helper.UserData.Current))
                     {
-                        bind = user_data.Current.Split(":")[2]+":"+user_data.Current.Split(":")[3];
+                        bind = helper.UserData.Current.Split(":")[2]+":"+helper.UserData.Current.Split(":")[3];
                     }
                 }
                 var m = new Main(Thread_id, email+":"+password, FORWARD_EMAIL, bind);
@@ -111,7 +125,8 @@ namespace SPOTIFYFINAL
             }
             catch (Exception e)
             {
-                log.Threadlogger(Thread_id, e.ToString());
+                log.Threadlogger(Thread_id, "ERROR WHILE STREAMING");
+                return false;
             }
             
             return true;
@@ -262,6 +277,7 @@ namespace SPOTIFYFINAL
                 if (!_BB.Done__())
                 {
                     _BB.Refresh();
+                    _BB.Clear_head();
                     if (trie == 2)
                     {
                         _BB.CLOSE();
@@ -293,7 +309,8 @@ namespace SPOTIFYFINAL
             if (constant.VERIFY_GO)
             {
                 log.Threadlogger(Thread_id,$"| NOW VERIFYING | {_Email} | ");
-                if (helper.Read_Email_CUSTOM(_Email, FORWARD_EMAIL, Thread_id))
+                var vbol = helper.Read_Email_CUSTOM(_Email, FORWARD_EMAIL, Thread_id);
+                if(vbol)
                 {
                     ver = 1;
                 }
@@ -383,6 +400,7 @@ namespace SPOTIFYFINAL
 
                 int which_url = helper.url_checker(urlx);
                 string url = urlx;
+                bool songlistv = true;
                 if (urlx.Contains(":play_only="))
                 {
                     string _list = urlx.Split(":play_only=")[1];
@@ -394,8 +412,20 @@ namespace SPOTIFYFINAL
                 }
                 else
                 {
-                    songs_list.Add(1);
-                    a_full_songs_ = 1;
+                    var _list = helper.Song_ext(url);
+                    if (_list.Result == 0)
+                    {
+                        songlistv = false;
+                        log.Threadlogger(Thread_id, $"total Tracks Extraction fail :{url}");
+                    }
+                    else
+                    {
+                        foreach (int der in Enumerable.Range( 1, _list.Result))
+                        {
+                            songs_list.Add(Convert.ToInt32(der));
+                        }
+                        a_full_songs_ = 1;
+                    }
                 }
 
                 // url loader
@@ -418,6 +448,7 @@ namespace SPOTIFYFINAL
                     if (!_BB.url_loader_loop(url))
                     {
                         log.Threadlogger(Thread_id, $"HAVING ERROR while loading this url: {url}");
+                        _BB.Refresh();
                     }
                     else
                     {
@@ -431,8 +462,7 @@ namespace SPOTIFYFINAL
                     continue;
                 }
                 
-                // pre scroll
-                
+                // pre scroll\
                 int tries1 = 0;
                 while (true)
                 {
@@ -460,6 +490,11 @@ namespace SPOTIFYFINAL
                 {
                     trie++;
                     continue;
+                }
+
+                if (!songlistv)
+                {
+                    songs_list.Add(Convert.ToInt32(1));
                 }
                 
                 // MAIN LOOP START
@@ -514,7 +549,7 @@ namespace SPOTIFYFINAL
                         _BB.ad_clicker();
                         log.Threadlogger(Thread_id, $"PROBLEM BROWSER WHILE PLAYING SONG {number} :{url}");
                         _BB.url_loader_loop(url);
-                        Thread.Sleep(10000);
+                        Thread.Sleep(5000);
                         _BB.pre_scroll_loop(url);
                         continue;
                     }
@@ -523,10 +558,9 @@ namespace SPOTIFYFINAL
                     if (!_BB.play_checker_loop("bearer"))
                     {
                         _BB.ad_clicker();
-                        _BB.Refresh();
-                        log.Threadlogger(Thread_id, $"PROBLEM BROWSER WHILE CHECKING IS SONG IS PLATING {number} ON {url}");
+                        log.Threadlogger(Thread_id, $"PROBLEM BROWSER WHILE CHECKING IS SONG PLAYING or NOT {number} ON {url}");
                         _BB.url_loader_loop(url);
-                        Thread.Sleep(10000);
+                        Thread.Sleep(5000);
                         _BB.pre_scroll_loop(url);
                         
                     }
@@ -574,15 +608,8 @@ namespace SPOTIFYFINAL
             }
             catch (Exception e)
             {
-                log.Threadlogger(Thread_id, "killla");
-                log.Threadlogger(Thread_id, e.ToString());
+                log.Threadlogger(Thread_id, "kill ERROR");
             }
-        }
-
-        public void test()
-        {
-            _BB.Refresh();
-            _BB.logp();
         }
 
         private void file_saver()
