@@ -12,13 +12,13 @@ namespace SPOTIFYFINAL
 {
     public class main_THREADLOOPER
     {
-        public main_THREADLOOPER(int i)
+        public main_THREADLOOPER(System.Guid i)
         {
             main_(i);
         }
-        private void main_(int Id)
+        private void main_(System.Guid Id)
         {
-            int Thread_id = Id;
+            System.Guid Thread_id = Id;
             while (true)
             {
                 var runx = false;
@@ -62,9 +62,9 @@ namespace SPOTIFYFINAL
             }
         }
 
-        private bool run(int Id)
+        private bool run(System.Guid Id)
         {
-            int Thread_id = Id;
+            System.Guid Thread_id = Id;
             string email;
             string password;
             string GEN_DOMAIN_ = "false";
@@ -141,12 +141,12 @@ namespace SPOTIFYFINAL
         private string _Pass;
         private int _PPA;
         private Browser _BB;
-        private int Thread_id;
+        private System.Guid Thread_id;
         private int PPA_COUNTER = 0;
         private string FORWARD_EMAIL;
         private int ver;
 
-        public Main(int thread, string userData, string FORWARD_E,string bind)
+        public Main(System.Guid thread, string userData, string FORWARD_E,string bind)
         {
             _PPA = new Random().Next(constant.PPA_MIN, constant.PPA_MAX);
             _Email = userData.Split(":")[0];
@@ -339,7 +339,7 @@ namespace SPOTIFYFINAL
                 var x = helper.stream_proxy;
                 x.MoveNext();
 
-                if (!_BB.Node_auth(x.Current))
+                if (!_BB.Node_auth(_BB.systemNodePort,x.Current))
                 {
                     _BB.ini = false;
                 }

@@ -34,6 +34,7 @@ namespace SPOTIFYFINAL
             helper.Cleaner();
             // Auth();
             Config();
+            Console.WriteLine("returned from config");
             
             new Thread(initialiseThreads).Start();
             
@@ -100,20 +101,29 @@ namespace SPOTIFYFINAL
         }
         static void initialiseThreads()
         {
+            Console.WriteLine("initialising threadpool and resources");
             Initialise();
-            for (int i = 1; i <= constant.Thread; i++)
+            Console.WriteLine("initialisation completed");
+            while (true)
             {
-                try
+                if (!(constant.Thread - _smartThreadPool.InUseThreads >= 0))
                 {
-                    _smartThreadPool.QueueWorkItem(() => new main_THREADLOOPER(i));
-                    Thread.Sleep(5000);
+                    break;
                 }
-                catch (Exception ex)
+                else
                 {
-                    log.errorlogger(ex, true);
+                    try
+                    {
+                        _smartThreadPool.QueueWorkItem(() => new main_THREADLOOPER(System.Guid.NewGuid()));
+                        Thread.Sleep(5000);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.errorlogger(ex, true);
+                    }
                 }
+                Thread.Sleep(5000);
             }
-            
         }
         private static void makeConfig()
         {
@@ -664,6 +674,7 @@ namespace SPOTIFYFINAL
             }
             string[] configs = Directory.GetFiles(configPath, "*.txt");
             System.Console.Write("Choose Config Number \n");
+            System.Console.Write("Choose Config Number \n");
             for (int i = 0; i < configs.Length; i++)
             {
                 System.Console.WriteLine($"{i + 1}. {Path.GetFileNameWithoutExtension(configs[i])}");
@@ -690,64 +701,72 @@ namespace SPOTIFYFINAL
                 Configuration configuration = new Configuration();
                 var config = 
                     JsonConvert.DeserializeObject<Configuration>(fileStream);
-        
-                configuration.maxThreads = Convert.ToInt32(config.maxThreads);
 
-                configuration.PPA_MAX = Convert.ToInt32(config.PPA_MAX);
-
-                configuration.PPA_MIN = Convert.ToInt32(config.PPA_MIN);
-
-                configuration.minPlaytime = Convert.ToInt32(config.minPlaytime);
-                configuration.maxPlaytime = Convert.ToInt32(config.maxPlaytime);
-                configuration.GEN_R = Convert.ToBoolean(config.GEN_R);
-                configuration.song_url_list_file = Convert.ToString(config.song_url_list_file);
-                if (configuration.GEN_R)
+                if (config != null)
                 {
-                    configuration.VERIFY_GO = Convert.ToBoolean(config.VERIFY_GO);
-                    if (configuration.VERIFY_GO)
+                    configuration.maxThreads = Convert.ToInt32(config.maxThreads);
+
+                    configuration.PPA_MAX = Convert.ToInt32(config.PPA_MAX);
+
+                    configuration.PPA_MIN = Convert.ToInt32(config.PPA_MIN);
+
+                    configuration.minPlaytime = Convert.ToInt32(config.minPlaytime);
+                    configuration.maxPlaytime = Convert.ToInt32(config.maxPlaytime);
+                    configuration.GEN_R = Convert.ToBoolean(config.GEN_R);
+                    configuration.song_url_list_file = Convert.ToString(config.song_url_list_file);
+                    if (configuration.GEN_R)
                     {
-                        configuration.v_proxyx = Convert.ToBoolean(config.v_proxyx);
-                        if (configuration.v_proxyx)
+                        configuration.VERIFY_GO = Convert.ToBoolean(config.VERIFY_GO);
+                        if (configuration.VERIFY_GO)
                         {
-                            configuration.v_proxy = Convert.ToString(config.v_proxyx);
-                            configuration.v_proxy_p = Convert.ToString(config.v_proxy_p);
+                            configuration.v_proxyx = Convert.ToBoolean(config.v_proxyx);
+                            if (configuration.v_proxyx)
+                            {
+                                configuration.v_proxy = Convert.ToString(config.v_proxyx);
+                                configuration.v_proxy_p = Convert.ToString(config.v_proxy_p);
+                            }
+                        }
+
+                        configuration.GEN_WHICH = Convert.ToBoolean(config.GEN_WHICH);
+                        if (configuration.GEN_WHICH)
+                        {
+                            configuration.GEN_DOMAIN = Convert.ToString(config.GEN_DOMAIN);
+                        }
+
+                        configuration.proxy_infox = Convert.ToBoolean(config.proxy_infox);
+                        if (configuration.proxy_infox)
+                        {
+                            configuration.proxy_info = Convert.ToString(config.proxy_info);
+                            configuration.proxy_info_p = Convert.ToString(config.proxy_info_p);
                         }
                     }
-                   
-                    configuration.GEN_WHICH = Convert.ToBoolean(config.GEN_WHICH);
-                    if (configuration.GEN_WHICH)
-                    {configuration.GEN_DOMAIN = Convert.ToString(config.GEN_DOMAIN);}
-                    configuration.proxy_infox = Convert.ToBoolean(config.proxy_infox);
-                    if (configuration.proxy_infox)
+                    else
                     {
-                        configuration.proxy_info = Convert.ToString(config.proxy_info);
-                        configuration.proxy_info_p = Convert.ToString(config.proxy_info_p);
+                        configuration.UserData = Convert.ToString(config.UserData);
+                    }
+
+                    configuration.stream_proxyx = Convert.ToBoolean(config.stream_proxyx);
+                    if (configuration.stream_proxyx)
+                    {
+                        configuration.stream_proxy = Convert.ToString(config.stream_proxy);
+                        configuration.stream_proxy_p = Convert.ToString(config.stream_proxy_p);
+                    }
+
+                    configuration.Like = Convert.ToBoolean(config.Like);
+                    if (configuration.Like)
+                    {
+                        configuration.Like_P = Convert.ToInt32(config.Like_P);
+                    }
+
+                    configuration.Lsave = Convert.ToBoolean(config.Lsave);
+                    if (configuration.Lsave)
+                    {
+                        configuration.Lsave_P = Convert.ToInt32(config.Lsave_P);
                     }
                 }
-                else
-                {
-                    configuration.UserData = Convert.ToString(config.UserData);
-                }
-                configuration.stream_proxyx = Convert.ToBoolean(config.stream_proxyx);
-                if (configuration.stream_proxyx)
-                {
-                    configuration.stream_proxy = Convert.ToString(config.stream_proxy);
-                    configuration.stream_proxy_p = Convert.ToString(config.stream_proxy_p);
-                }
-
-                configuration.Like = Convert.ToBoolean(config.Like);
-                if (configuration.Like)
-                {
-                    configuration.Like_P = Convert.ToInt32(config.Like_P);
-                }
-                
-                configuration.Lsave = Convert.ToBoolean(config.Lsave);
-                if (configuration.Lsave)
-                {
-                    configuration.Lsave_P = Convert.ToInt32(config.Lsave_P);
-                }
+Console.WriteLine("reading config\n");
                 configuration.readconfig();
-
+Console.WriteLine("reading config done");
             }
             else if (selection == 0)
             {
@@ -854,21 +873,32 @@ namespace SPOTIFYFINAL
                 }
                 else if (temp == 4)
                 {
-                    while (true)
-                    {
+                    
+                    
                         try
                         {
                             System.Console.WriteLine("enter ip:port/domain to botmaster\n and then delay");
-                            var apitemp = new api_Django(Console.ReadLine(),Convert.ToInt32(Console.ReadLine()));
-                            Thread.Sleep(3000);
+                            var apiDjango = new api_Django(Console.ReadLine(),Convert.ToInt32(Console.ReadLine()));
+                            Console.WriteLine("returned from api config");
+                            while (constant.loadedconfigid == null)
+                            {
+                                Console.WriteLine("\n\nconfig not loaded sleeping for 3 seconds");
+                                Thread.Sleep(3000);
+                            }
+                            Console.WriteLine("sleeping");
+                            Thread.Sleep(5000);
                             break;
                         }
                         catch (Exception ex)
                         {
+                            Console.WriteLine(ex.ToString());
                             errorlogger(ex, true);
+                            Thread.Sleep(500000);
                             Console.Clear();
                         }
-                    }
+
+                        
+                    
                     
                 }
                 else

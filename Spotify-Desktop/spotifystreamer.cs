@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Net.Sockets;
 using System.Collections.Specialized;
 using System.Drawing;
 using Console = Colorful.Console;
@@ -24,21 +25,72 @@ using Network = OpenQA.Selenium.DevTools.V91.Network;
 using DevToolsSessionDomains = OpenQA.Selenium.DevTools.V91.DevToolsSessionDomains;
 
 namespace SPOTIFYFINAL
+
 {
+    public class isTcpPortOpen
+    {
+        public TcpClient MainClient { get; set; }
+        public bool tcpOpen { get; set; }
+    }
+
     public class Browser
     {
         private IWebDriver driver;
         private IDevToolsSession session;
         private ChromeOptions options;
-        int Thread_id = 0;
+        private System.Guid Thread_id;
         public bool ini = true;
         public bool session_i = false;
         private Process process_;
         private string email__;
         public DevToolsSessionDomains domains;
-        public
-            Browser(int id, string email, string bind)
+        public int systemNodePort = 2542;
+        public Browser(System.Guid id, string email, string bind)
         {
+            
+            void AsyncCallback(IAsyncResult asyncResult)
+            {
+                var state = (isTcpPortOpen)asyncResult.AsyncState;
+                TcpClient client = state.MainClient;
+
+                try
+                {
+                    client.EndConnect(asyncResult);
+                }
+                catch
+                {
+                    return;
+                }
+
+                if (client.Connected && state.tcpOpen)
+                {
+                    return;
+                }
+               
+                client.Close();
+            }
+            while (true)
+            {
+                    using (var newClient = new TcpClient())
+                    {
+
+                        var state = new isTcpPortOpen
+                        {
+                            MainClient = newClient, tcpOpen = true
+                        };
+
+                        IAsyncResult ar = newClient.BeginConnect("127.0.0.1", systemNodePort, AsyncCallback, state);
+                        state.tcpOpen = ar.AsyncWaitHandle.WaitOne(5000, false);
+
+                        if (state.tcpOpen == true || newClient.Connected == true)
+                        {
+                            break;
+
+                        }
+                    }
+
+                    systemNodePort++;
+            }
             string proxy__;
             email__ = email;
             try
@@ -87,9 +139,9 @@ namespace SPOTIFYFINAL
                             }
                             else
                             {
-                                if (!Node_auth(proxy__)) ini = false;
-                                int po = 4440 + Thread_id;
-                                options.AddArgument($"--proxy-server=127.0.0.1:{po}");
+                                if (!Node_auth(systemNodePort,proxy__)) ini = false;
+                                
+                                options.AddArgument($"--proxy-server=127.0.0.1:{systemNodePort}");
                             }
                         
                         }
@@ -101,9 +153,9 @@ namespace SPOTIFYFINAL
                     var xty = helper.pgen;
                     xty.MoveNext();
                     proxy__ = xty.Current;
-                    if (!Node_auth(proxy__)) ini = false;
-                    int po = 4440 + Thread_id;
-                    options.AddArgument($"--proxy-server=127.0.0.1:{po}");
+                    if (!Node_auth(systemNodePort,proxy__)) ini = false;
+                    
+                    options.AddArgument($"--proxy-server=127.0.0.1:{systemNodePort}");
                 }
                 else if (constant.stream_proxyx)
                 {
@@ -116,9 +168,9 @@ namespace SPOTIFYFINAL
                     }
                     else
                     {
-                        if (!Node_auth(proxy__)) ini = false;
-                        int po = 4440 + Thread_id;
-                        options.AddArgument($"--proxy-server=127.0.0.1:{po}");
+                        if (!Node_auth(systemNodePort,proxy__)) ini = false;
+                        
+                        options.AddArgument($"--proxy-server=127.0.0.1:{systemNodePort}");
                     }
                 }
 
@@ -195,6 +247,7 @@ namespace SPOTIFYFINAL
             }
             
         }
+        
 
         public void Evaluate(string jscode)
         {
@@ -204,9 +257,9 @@ namespace SPOTIFYFINAL
             });
         }
 
-        public bool Node_auth(string proxy)
+        public bool Node_auth(int port,string proxy)
         {
-            int port = 4440 +Thread_id;
+            
             
             if (helper.proxy_auth_checker(proxy))
             {

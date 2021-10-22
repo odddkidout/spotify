@@ -80,7 +80,7 @@ namespace SPOTIFYFINAL
             return false;
         }
 
-        public static bool Read_Email_CUSTOM(string email, string Forwardmail, int Thread_id)
+        public static bool Read_Email_CUSTOM(string email, string Forwardmail, System.Guid Thread_id)
         {
             string server = "imap.gmail.com";
             if (Forwardmail.ToLower().Contains("gmail"))
@@ -173,7 +173,7 @@ namespace SPOTIFYFINAL
             
         }
 
-        private static bool verifier(string link, string proxy, int Thread_id)
+        private static bool verifier(string link, string proxy, System.Guid Thread_id)
         {
             try
             {
@@ -218,11 +218,11 @@ namespace SPOTIFYFINAL
             }
             catch (Exception)
             {
-                log.Threadlogger(0,"| HOW MANY SONGS EXTRACTING ERROR | RETRYING");
+                log.Threadlogger(System.Guid.Empty,"| HOW MANY SONGS EXTRACTING ERROR | RETRYING");
             }
         }
 
-        private static bool proxylessverifier(string link, int Thread_id)
+        private static bool proxylessverifier(string link, System.Guid Thread_id)
         {
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create(link);
             try
@@ -267,7 +267,7 @@ namespace SPOTIFYFINAL
             }
             catch (Exception)
             {
-                log.Threadlogger(0, "FILE DELETE ERROR -- == ++ ;; :: [[ }}");
+                log.Threadlogger(System.Guid.Empty, "FILE DELETE ERROR -- == ++ ;; :: [[ }}");
             }
             try
             {
@@ -281,7 +281,7 @@ namespace SPOTIFYFINAL
             }
             catch (Exception)
             {
-                log.Threadlogger(0, "FILE DELETE ERROR -- == ++ ;; :: [[ }}");
+                log.Threadlogger(System.Guid.Empty, "FILE DELETE ERROR -- == ++ ;; :: [[ }}");
             }
             
         }
@@ -303,7 +303,7 @@ namespace SPOTIFYFINAL
             }
             catch (Exception)
             {
-                log.Threadlogger(0, "FILE DELETE ERROR -- == ++ ;; :: [[ }}");
+                log.Threadlogger(System.Guid.Empty, "FILE DELETE ERROR -- == ++ ;; :: [[ }}");
             }
             
         }
@@ -336,7 +336,7 @@ namespace SPOTIFYFINAL
             }
             catch (Exception)
             {
-                log.Threadlogger(0, "SONG EXTRACTION FAIL");
+                log.Threadlogger(System.Guid.Empty, "SONG EXTRACTION FAIL");
             }
             return await Task.FromResult(0);
 

@@ -131,65 +131,73 @@ namespace SPOTIFYFINAL
 
         public void readconfig()
         {
-            constant.Thread = maxThreads;
-            constant.PPA_MAX = PPA_MAX;
-            constant.PPA_MIN = PPA_MIN;
-            constant.MIN_ = minPlaytime;
-            constant.MAX_ = maxPlaytime;
-            constant.GEN_R = GEN_R;
-            constant.song_url_list_file = song_url_list_file;
-            if (GEN_R)
+            try
             {
-                constant.VERIFY_GO = VERIFY_GO;
-                if (VERIFY_GO)
+                constant.Thread = maxThreads;
+                constant.PPA_MAX = PPA_MAX;
+                constant.PPA_MIN = PPA_MIN;
+                constant.MIN_ = minPlaytime;
+                constant.MAX_ = maxPlaytime;
+                constant.GEN_R = GEN_R;
+                constant.song_url_list_file = song_url_list_file;
+                if (GEN_R)
                 {
-                    constant.v_proxyx = v_proxyx;
-                    if (v_proxyx)
+                    constant.VERIFY_GO = VERIFY_GO;
+                    if (VERIFY_GO)
                     {
-                        constant.v_proxy = v_proxy;
-                        constant.v_proxy_p = v_proxy_p;
+                        constant.v_proxyx = v_proxyx;
+                        if (v_proxyx)
+                        {
+                            constant.v_proxy = v_proxy;
+                            constant.v_proxy_p = v_proxy_p;
+                        }
+                    }
+
+                    constant.GEN_WHICH = GEN_WHICH;
+                    if (GEN_WHICH) constant.GEN_DOMAIN = GEN_DOMAIN;
+                    constant.proxy_infox = proxy_infox;
+                    if (proxy_infox)
+                    {
+                        constant.proxy_info = proxy_info;
+                        constant.proxy_info_p = proxy_info_p;
                     }
                 }
-                
-                constant.GEN_WHICH = GEN_WHICH;
-                if (GEN_WHICH) constant.GEN_DOMAIN = GEN_DOMAIN;
-                constant.proxy_infox = proxy_infox;
-                if (proxy_infox)
+                else
                 {
-                    constant.proxy_info = proxy_info;
-                    constant.proxy_info_p = proxy_info_p;
+                    constant.UserData = UserData;
                 }
-            }
-            else
-            {
-                constant.UserData = UserData;
-            }
-            
-            constant.stream_proxyx = stream_proxyx;
-            if (stream_proxyx)
-            {
-                constant.stream_proxy = stream_proxy;
-                constant.stream_proxy_p = stream_proxy_p;
-            }
 
-            constant.Like = Like;
-            if (Like)
-            {
-                constant.Like_P = Like_P;
-            }
-            
-            constant.Lsave = Lsave;
-            if (Lsave)
-            {
-                constant.Lsave_P = Lsave_P;
-            }
+                constant.stream_proxyx = stream_proxyx;
+                if (stream_proxyx)
+                {
+                    constant.stream_proxy = stream_proxy;
+                    constant.stream_proxy_p = stream_proxy_p;
+                }
 
+                constant.Like = Like;
+                if (Like)
+                {
+                    constant.Like_P = Like_P;
+                }
+
+                constant.Lsave = Lsave;
+                if (Lsave)
+                {
+                    constant.Lsave_P = Lsave_P;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                Thread.Sleep(500000);
+            }
         }
     }
 
     public class log
         {
-            public static void Threadlogger(int Threadid, String update)
+            public static void Threadlogger(System.Guid Threadid, String update)
             {
 
                 string path = Path.Combine(constant.currentPath, "logs");
