@@ -1446,7 +1446,7 @@ namespace SPOTIFYFINAL
         public void Save_Session()
         {
             var x2 = Environment.GetEnvironmentVariable("APPDATA");
-            var path = x2+$"/Spotify-{email__}";
+            var path = x2+$@"/Spotify-{email__}";
             
             var sourceFile = Path.Combine(path, "prefs");
             string configPath = Path.Combine(constant.currentPath, "SAVE_SESSION");

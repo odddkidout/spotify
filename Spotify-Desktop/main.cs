@@ -386,6 +386,7 @@ namespace SPOTIFYFINAL
             string[] url_links = File.ReadAllLines(constant.song_url_list_file);
 
             int index = 0;
+            _BB.Save_Session();
             foreach (var urlx in url_links)
             {
                 index++;
