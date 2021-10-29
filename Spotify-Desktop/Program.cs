@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Amib.Threading;
 using KeyAuth;
-using Spotify_Desktop;
 
 namespace SPOTIFYFINAL
 {
@@ -18,8 +17,6 @@ namespace SPOTIFYFINAL
     {
         
         static SmartThreadPool _smartThreadPool;
-
-
         static void Main()
         {
             
@@ -32,7 +29,7 @@ namespace SPOTIFYFINAL
 
             helper.log_cleaner();
             helper.Cleaner();
-            // Auth();
+            Auth();
             Config();
             
             new Thread(initialiseThreads).Start();
@@ -41,7 +38,7 @@ namespace SPOTIFYFINAL
             {
                 // Console.Clear();
                 // ASCII.ASCIII();
-                Console.Title = $"SPoTi_{VERSION}_|_TOTAL-STREAM-{stats.Stream_Total}_|_LOGIN_{stats.Succes_login}_|_GENRATED-{stats.Gen}_|_FAIL-{stats.fail}_|_CPU-{cpuCounter.NextValue()+"%"}_|_RAM-{ramCounter.NextValue()+"MB"}";
+                Console.Title = $"SPoTi_{VERSION}_|_TOTAL-STREAM-{stats.Stream_Total}_|_LOGIN_{stats.Succes_login}_|_GENERATED-{stats.Gen}_|_FAIL-{stats.fail}_|_CPU-{cpuCounter.NextValue()+"%"}_|_RAM-{ramCounter.NextValue()+"MB"}";
                 // Console.WriteLine("Note \"{0}\"", Console.Title);
                 Thread.Sleep(5000);
             }
@@ -212,7 +209,7 @@ namespace SPOTIFYFINAL
                             {
                                 logo();
                                 System.Console.WriteLine("GEN PROXY PATH");
-                                string datax = Convert.ToString(System.Console.ReadLine());
+                                string datax = @""+Convert.ToString(System.Console.ReadLine());
                                 configuration.proxy_info = datax;
                                 System.Console.WriteLine("Press 1 for Http");
                                 System.Console.WriteLine("Press 2 for Https");
@@ -309,7 +306,7 @@ namespace SPOTIFYFINAL
                                 {
                                     logo();
                                     System.Console.WriteLine("verification PROXY PATH");
-                                    string datax = Convert.ToString(System.Console.ReadLine());
+                                    string datax = @""+Convert.ToString(System.Console.ReadLine());
                                     configuration.v_proxy = datax;
                                     System.Console.WriteLine("Press 1 for Http");
                                     System.Console.WriteLine("Press 2 for Https");
@@ -415,7 +412,7 @@ namespace SPOTIFYFINAL
                     {
                         logo();
                         System.Console.WriteLine("Input UserData .txt");
-                        string data = Convert.ToString(System.Console.ReadLine());
+                        string data = @""+Convert.ToString(System.Console.ReadLine());
                     
                         configuration.UserData = data;
                         break;
@@ -452,7 +449,7 @@ namespace SPOTIFYFINAL
                         {
                             logo();
                             System.Console.WriteLine("File Path streaming proxy");
-                            string datax = Convert.ToString(System.Console.ReadLine());
+                            string datax = @""+Convert.ToString(System.Console.ReadLine());
                             configuration.stream_proxy = datax;
                             System.Console.WriteLine("Press 1 for Http");
                             System.Console.WriteLine("Press 2 for Https");
@@ -795,7 +792,6 @@ namespace SPOTIFYFINAL
                 System.Console.WriteLine("1 => Load config/start bot");
                 System.Console.WriteLine("2 => Make config");
                 System.Console.Write("3 => setup discord webhook\n");
-                Console.WriteLine("4 => connect to bot net");
                 int temp = 0;
                 try
                 {
@@ -851,25 +847,6 @@ namespace SPOTIFYFINAL
                         errorlogger(ex, true);
                         Console.Clear();
                     }
-                }
-                else if (temp == 4)
-                {
-                    while (true)
-                    {
-                        try
-                        {
-                            System.Console.WriteLine("enter ip:port/domain to botmaster\n and then delay");
-                            var apitemp = new api_Django(Console.ReadLine(),Convert.ToInt32(Console.ReadLine()));
-                            Thread.Sleep(3000);
-                            break;
-                        }
-                        catch (Exception ex)
-                        {
-                            errorlogger(ex, true);
-                            Console.Clear();
-                        }
-                    }
-                    
                 }
                 else
                 {

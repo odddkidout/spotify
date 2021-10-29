@@ -125,8 +125,7 @@ namespace SPOTIFYFINAL
                         query.To = email; 
                         List<long> uids = imap.Search(query); 
                         foreach (long uid in uids) 
-                        { 
-                            Console.Write("\n ---------------++{bnd}++-----w-----------");
+                        {
                             byte[] eml = imap.GetMessageByUID(uid); 
                             IMail message = new MailBuilder()
                                 .CreateFromEml(eml); 
@@ -290,6 +289,11 @@ namespace SPOTIFYFINAL
         {
             string DeleteThis = "thread";
             string configPath = Path.Combine(constant.currentPath, $"logs");
+            if (!Directory.Exists(configPath))
+            {
+                Directory.CreateDirectory(configPath);
+                return;
+            }
             string[] Files = Directory.GetFiles(configPath);
             try
             {

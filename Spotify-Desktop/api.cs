@@ -218,56 +218,6 @@ namespace Spotify_Desktop
                             }
                             configuration.readconfig();
                             
-                            // Console.WriteLine(temp[0].name);
-                            // constant.Thread = temp[0].maxThreads;
-                            // constant.PPA_MAX = temp[0].PPA_MAX;
-                            // constant.PPA_MIN = temp[0].PPA_MIN;
-                            // constant.MIN_ = temp[0].minPlaytime;
-                            // constant.MAX_ = temp[0].maxPlaytime;
-                            // constant.GEN_R = temp[0].GEN_R;
-                            // constant.urls = temp[0].urls;
-                            // if (temp[0].GEN_R)
-                            // {
-                            //     constant.VERIFY_GO = temp[0].VERIFY_GO;
-                            //     constant.GEN_WHICH = temp[0].GEN_WHICH;
-                            //     if (temp[0].GEN_WHICH) constant.GEN_DOMAIN = temp[0].GEN_DOMAIN;
-                            //     constant.proxy_infox = temp[0].proxy_infox;
-                            //     if (temp[0].proxy_infox)
-                            //     {
-                            //         constant.proxy_info = temp[0].proxy_info;
-                            //         constant.proxy_info_p = temp[0].proxy_info_p;
-                            //     }
-                            // }
-                            //
-                            // constant.stream_proxyx = temp[0].stream_proxyx;
-                            // if (temp[0].stream_proxyx)
-                            // {
-                            //     constant.stream_proxy = temp[0].stream_proxy;
-                            //     constant.stream_proxy_p = temp[0].stream_proxy_p;
-                            // }
-                            //
-                            // constant.v_proxyx = temp[0].stream_proxyx;
-                            // if (temp[0].v_proxyx)
-                            // {
-                            //     constant.v_proxy = temp[0].stream_proxy;
-                            //     constant.v_proxy_p = temp[0].stream_proxy_p;
-                            // }
-                            //
-                            //
-                            // if (temp[0].Like_P>0)
-                            // {
-                            //     constant.Like = true;
-                            //     constant.Like_P = temp[0].Like_P;
-                            // }
-                            //
-                            //
-                            // if (temp[0].Lsave_P>0)
-                            // {
-                            //     constant.Lsave = true;
-                            //     constant.Lsave_P = temp[0].Lsave_P;
-                            // }
-                            
-
                             return;
                         }
                         else

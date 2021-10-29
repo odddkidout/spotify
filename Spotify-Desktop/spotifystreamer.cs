@@ -35,7 +35,7 @@ namespace SPOTIFYFINAL
         public bool session_i = false;
         private Process process_;
         private string email__;
-        public DevToolsSessionDomains domains;
+        private DevToolsSessionDomains domains;
         public
             Browser(int id, string email, string bind)
         {
@@ -206,7 +206,7 @@ namespace SPOTIFYFINAL
 
         public bool Node_auth(string proxy)
         {
-            int port = 4440 +Thread_id;
+            int port = 4440 + Thread_id;
             
             if (helper.proxy_auth_checker(proxy))
             {

@@ -89,7 +89,6 @@ namespace SPOTIFYFINAL
                 else
                 {
                     helper.UserData.MoveNext();
-                    Console.Write("-=-=-=-=-=-=-helper.UserData.Current");
                     Console.Write(helper.UserData.Current);
                     email = helper.UserData.Current.Split(":")[0];
                     password = helper.UserData.Current.Split(":")[1];
@@ -126,6 +125,7 @@ namespace SPOTIFYFINAL
             catch (Exception e)
             {
                 log.Threadlogger(Thread_id, "ERROR WHILE STREAMING");
+                
                 return false;
             }
             
@@ -146,7 +146,7 @@ namespace SPOTIFYFINAL
         private string FORWARD_EMAIL;
         private int ver;
 
-        public Main(int thread, string userData, string FORWARD_E,string bind)
+        public Main(int thread, string userData, string FORWARD_E, string bind)
         {
             _PPA = new Random().Next(constant.PPA_MIN, constant.PPA_MAX);
             _Email = userData.Split(":")[0];
